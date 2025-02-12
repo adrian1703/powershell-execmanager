@@ -1,18 +1,23 @@
-function Get-DefaultArgsForAction {
+function Read-Config {
     param (
-        [Parameter(HelpMessage = "Enter the action-schema object")]
-        [Alias("as")]
-        [Object] $actionSchema
+        [Parameter(HelpMessage = "Enter the path to run config yaml")]
+        [Alias("cfp")]
+        [string] $configPath
+    ,
+        [Parameter(HelpMessage = "Enter the run config as parsed object")]
+        [Alias("cfo")]
+        [string] $config
     )
-    $deArgs = @()
-    if ($actionSchema -eq $null)
+    if (-not $config -and -not $configPath)
     {
-        return $deArgs
+        throw "You must provide at least one of the following parameters: `-configPath` or `-config`."
     }
-    foreach ($key in $actionSchema.defaults.Keys)
+
+    if ($config -eq $null)
     {
-        $value = $actionSchema.args.$key
-        $deArgs += "/$key=$value"
+        $yamlContent = Get-Content -Raw -Path $configPath
+        $yamlContent = Replace-EnvVarsPlaceholders -in $yamlContent
+        return ConvertFrom-Yaml -Yaml $yamlContent
     }
-    return $deArgs
+    return $config
 }
