@@ -1,4 +1,4 @@
-ufunction Invoke-Exe {
+function Invoke-Exe {
     <#
     .SYNOPSIS
     Executes an executable file with the specified path and arguments.
@@ -41,8 +41,8 @@ ufunction Invoke-Exe {
         [string] $fileLocation
     ,
         [Parameter(Mandatory = $false, HelpMessage = "Enter optional arguments for the executable")]
-        [Alias("args")]
-        [Array]$arguments
+        [Alias("eargs")]
+        [Array]$execArguments
     )
 
     # Build the full path to the executable
@@ -55,14 +55,14 @@ ufunction Invoke-Exe {
     }
 
     # Join arguments into a space-separated string for logging
-    $argString = if ($arguments) { $arguments -join ' ' } else { '' }
+    $argString = if ($execArguments) { $execArguments -join ' ' } else { '' }
 
     # Log the command being executed
     Write-Host "Executing command: $exeFullPath $argString"
 
     # Invoke the executable along with arguments
     try {
-        & $exeFullPath @arguments
+        & $exeFullPath @execArguments
         Write-Host "Command executed successfully."
     }
     catch {

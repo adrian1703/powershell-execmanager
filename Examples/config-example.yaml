@@ -10,13 +10,13 @@ schema:
           -downloadFolder
       defaults:
         downloadFolder: "${TMP}"
-    installExe:
+    callExe:
       definition:
         function: "Invoke-InstallExe"
         args:
           -fileName
           -fileLocation
-          -installArgs
+          -execArguments
       defaults:
         fileLocation: "${TMP}"
 
@@ -28,10 +28,10 @@ tasks:
         args:
           fileName: "install.exe"
           link: "https://download.jetbrains.com/rider/JetBrains.Rider-2024.3.4.exe"
-      - cmd: installExe
+      - cmd: callExe
         args:
           fileName: "install.exe"
-          installArgs:
+          execArguments:
               - "/S"
               - "/CONFIG=${SETUP_PROJ}/src/rider/silent.config"
               - "/LOG=${TMP}/rider_install.log"
