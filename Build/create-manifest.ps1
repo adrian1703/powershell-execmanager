@@ -17,5 +17,6 @@ $moduleSettings = @{
     FunctionsToExport = $public + $customActions
     CompanyName = "Adrian Privat"
     ModuleVersion = 0.1
+    RootModule = 'PSCmdManager.psm1'
 }
 New-ModuleManifest @moduleSettings
