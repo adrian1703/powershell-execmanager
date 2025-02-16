@@ -15,7 +15,7 @@ Describe 'PSCmdManager Module' {
         }
         It 'exports all public functions and makes them callable' {
             foreach ($f in $publicFunc)
-            {
+        {
                 { & $f -? } | Should -Not -Throw -Because "$f should have been imported"
             }   
         }
