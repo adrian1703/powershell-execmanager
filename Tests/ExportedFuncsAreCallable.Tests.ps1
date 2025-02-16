@@ -25,7 +25,6 @@ Describe 'PSCmdManager Module' {
                 { & $f -? } | Should -Not -Throw -Because "$f should have been imported"
             }
         }
-
         It 'does not export any private functions and making them not callable' {
             foreach ($f in $privateFunc)
             {
