@@ -16,5 +16,6 @@ $moduleSettings = @{
     Path = Join-Path $PSScriptRoot "../PSCmdManager/PSCmdManager.psd1"
     FunctionsToExport = $public + $customActions
     CompanyName = "Adrian Privat"
+    ModuleVersion = 0.1
 }
 New-ModuleManifest @moduleSettings
