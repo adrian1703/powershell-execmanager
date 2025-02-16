@@ -1,5 +1,50 @@
-function Invoke-Download
-{
+function Invoke-Download {
+    <#
+    .SYNOPSIS
+    Downloads a file from a specified URL and saves it to a target folder.
+
+    .DESCRIPTION
+    The `Invoke-Download` function automates downloading files from the provided URL and
+    saves them to a target folder with the specified file name. If the folder does not exist,
+    it is created automatically. If a file with the same name already exists, it is deleted
+    before the new file is downloaded. The function returns the status of the download,
+    including the file path and any errors encountered during the process.
+
+    .PARAMETER link
+    Specifies the URL of the file to be downloaded. This parameter is mandatory.
+
+    .PARAMETER fileName
+    Specifies the name of the file to be saved. If not provided, the file name is automatically
+    derived from the URL. This parameter is mandatory.
+
+    .PARAMETER downloadFolder
+    Specifies the target folder where the file should be downloaded. If the folder does not exist,
+    it will be created. This parameter is mandatory.
+
+    .EXAMPLE
+    Invoke-Download -link "https://example.com/file.zip" -fileName "file.zip" -downloadFolder "C:\Downloads"
+    Downloads the file from the given URL and saves it as `file.zip` in the `C:\Downloads` folder.
+
+    .EXAMPLE
+    Invoke-Download -link "https://example.com/app.exe" -fileName "installer.exe" -downloadFolder "D:\Installers"
+    Downloads the `app.exe` file from the URL and saves it as `installer.exe` in the `D:\Installers` folder.
+    If the `D:\Installers` folder does not exist, it is created automatically.
+
+    .NOTES
+    - The function uses `Invoke-WebRequest` for downloading files, so ensure you are running in a
+      PowerShell environment where this cmdlet is available.
+    - Errors are handled gracefully, and the function will return a structured result object
+      with status, file path, and an error message if applicable.
+    - Proper internet connectivity and permissions to write to the download folder are required.
+
+    .OUTPUTS
+    Returns a custom object containing:
+        - Status: "Success" or "Error"
+        - Path: The full path to the downloaded file
+        - Message: A message indicating the outcome of the download operation.
+    #>
+    [CmdletBinding()]
+
     param (
     # Mandatory
         [Parameter(Mandatory = $true, HelpMessage = "Enter the download link")]
