@@ -5,7 +5,7 @@ $CustomActions = @( Get-ChildItem -Path $PSScriptRoot\CustomActions\*.ps1 -Error
 $ModuleRoot    = $PSScriptRoot
 
 #Dot source the files
-Foreach($import in @($Public + $Private))
+Foreach($import in @($Public + $Private + $CustomActions))
 {
     Try
     {
@@ -17,5 +17,5 @@ Foreach($import in @($Public + $Private))
     }
 }
 
-Export-ModuleMember -Function $Public.Basename
+Export-ModuleMember -Function @($Public + $CustomActions).Basename
 
