@@ -12,6 +12,11 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
+      - name: Install Dependency PS yaml
+        shell: pwsh
+        run: |
+          Set-PSRepository PSGallery -InstallationPolicy Trusted
+          Install-Module powershell-yaml -ErrorAction Stop
       - name: Test with Pester
         shell: pwsh
         run: Invoke-Pester
