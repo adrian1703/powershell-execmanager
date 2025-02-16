@@ -48,7 +48,7 @@ function Start-RunAllTasks {
         [Object] $config
     ,
         [Parameter(HelpMessage = "Test Flag; Set to not execute.")]
-        [Alias("dry")]
+#        [Alias("dry")]
         [switch] $dry
     )
 

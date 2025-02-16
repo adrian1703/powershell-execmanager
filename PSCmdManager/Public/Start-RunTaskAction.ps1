@@ -49,7 +49,7 @@ function Start-RunTaskAction {
         [Object] $config
     ,
         [Parameter(HelpMessage = "Test Flag; Set to not execute.")]
-        [Alias("dry")]
+#        [Alias("dry")]
         [switch] $dry
     ,
         [Parameter(Mandatory = $true, HelpMessage = "Enter the execution task")]
