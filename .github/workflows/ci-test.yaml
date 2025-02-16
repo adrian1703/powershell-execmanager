@@ -1,0 +1,17 @@
+name: CI Tests
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  shell-test:
+    name: Running pester tests
+    runs-on: windows-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Test with Pester
+        shell: pwsh
+        run: Invoke-Pester
