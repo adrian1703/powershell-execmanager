@@ -1,8 +1,9 @@
 BeforeAll {
-    Import-Module $PSScriptRoot/../PSCmdManager
-    $publicFunc    = @( Get-ChildItem -Path $PSScriptRoot/../PSCmdManager/Public/*.ps1        ).Basename
-    $privateFunc   = @( Get-ChildItem -Path $PSScriptRoot/../PSCmdManager/Private/*.ps1       ).Basename
-    $customActions = @( Get-ChildItem -Path $PSScriptRoot/../PSCmdManager/CustomActions/*.ps1 ).Basename
+    $root          = Join-Path $PSScriptRoot "../../PSCmdManager"
+    Import-Module($root)
+    $publicFunc    = @( Get-ChildItem -Path (Join-Path $root "Public/*.ps1"        )).Basename
+    $privateFunc   = @( Get-ChildItem -Path (Join-Path $root "Private/*.ps1"       )).Basename
+    $customActions = @( Get-ChildItem -Path (Join-Path $root "CustomActions/*.ps1" )).Basename
 }
 
 Describe 'PSCmdManager Module' {

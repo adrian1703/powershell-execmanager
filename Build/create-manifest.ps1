@@ -15,8 +15,11 @@ $moduleSettings = @{
     })
     Path = Join-Path $PSScriptRoot "../PSCmdManager/PSCmdManager.psd1"
     FunctionsToExport = $public + $customActions
-    CompanyName = "Adrian Privat"
+    Author = "Adrian Kuhn"
+#    CompanyName = "Adrian Privat"
     ModuleVersion = 0.1
     RootModule = 'PSCmdManager.psm1'
+    Description = "A Tool for managing a command workflow using yaml files for configuration. A prime
+example would be the deterministic setup of software on a clean instance."
 }
 New-ModuleManifest @moduleSettings
