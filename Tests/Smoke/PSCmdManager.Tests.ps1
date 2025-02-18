@@ -1,12 +1,14 @@
 BeforeAll {
-    $root          = Join-Path $PSScriptRoot "../../PSCmdManager"
+    $root = Join-Path $PSScriptRoot "../../PSCmdManager"
     Import-Module($root)
-    $publicFunc    = @( Get-ChildItem -Path (Join-Path $root "Public/*.ps1"        )).Basename
-    $privateFunc   = @( Get-ChildItem -Path (Join-Path $root "Private/*.ps1"       )).Basename
-    $customActions = @( Get-ChildItem -Path (Join-Path $root "CustomActions/*.ps1" )).Basename
 }
 
 Describe 'PSCmdManager Module' {
+
+    $publicFunc    = @( Get-ChildItem -Path (Join-Path $root "Public/*.ps1"        )).Basename
+    $privateFunc   = @( Get-ChildItem -Path (Join-Path $root "Private/*.ps1"       )).Basename
+    $customActions = @( Get-ChildItem -Path (Join-Path $root "CustomActions/*.ps1" )).Basename
+
     Context 'on Import-Module' {
         It 'has 3 public functions' {
             $publicFunc.Count | Should -Be 3
