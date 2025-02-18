@@ -58,13 +58,13 @@ function Invoke-Exe {
     $argString = if ($execArguments) { $execArguments -join ' ' } else { '' }
 
     # Log the command being executed
-    Write-Host "Executing command: $exeFullPath $argString"
+    Write-Verbose "Executing command: $exeFullPath $argString"
 
     # Invoke the executable along with arguments
     try
     {
         & $exeFullPath @execArguments
-        Write-Host "Command executed successfully."
+        Write-Verbose "Command executed successfully."
     }
     catch
     {

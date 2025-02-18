@@ -66,9 +66,9 @@ function Invoke-Download {
     }
     $fullPath = Join-Path $downloadFolder $fileName
 
-    Write-Host "Download link: $link"
-    Write-Host "Download folder: $downloadFolder"
-    Write-Host "Full file path: $fullPath"
+    Write-Verbose "Download link: $link"
+    Write-Verbose "Download folder: $downloadFolder"
+    Write-Verbose "Full file path: $fullPath"
 
 
     # Ensure target folder exists
@@ -79,20 +79,14 @@ function Invoke-Download {
     # delete file if exists
     if (Test-Path -Path $fullPath)
     {
-        Write-Host "Existing file found at $fullPath, removing it."
+        Write-Verbose "Existing file found at $fullPath, removing it."
         Remove-Item -Path $fullPath -Force
-    }
-    # init
-    $result = @{
-        Status = "Error"
-        Path = $fullPath
-        Message = "Download failed; the file was not found at the specified path."
     }
 
     # Attempt to download the file
     try
     {
-        Write-Host "Attempting to download the file..."
+        Write-Verbose "Attempting to download the file..."
         Invoke-WebRequest -Uri $link -OutFile $fullPath
         $result = @{
             Status = "Success"
@@ -102,14 +96,12 @@ function Invoke-Download {
     }
     catch
     {
-        Write-Host "Error during file download: $_"
-        $result = @{
-            Status = "Error"
-            Path = $fullPath
-            Message = "An error occurred during download: $_"
-        }
+        # Fail explicitly with an error message
+        $errorMessage = "An error occurred during download: $($_.Exception.Message)"
+        Write-Error $errorMessage
+        throw $errorMessage  # Stop the script execution with the error
     }
     # Output the final result as both a message and return value
-    Write-Host $result
+    Write-Verbose $result
     return $result
 }
