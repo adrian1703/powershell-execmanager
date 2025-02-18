@@ -11,7 +11,7 @@ Write-Host $path
 
 $projectName = "PSCmdManager"
 $targetPath  = Join-Path $moduleInstallPath $projectName
-$sourcePath  = Join-Path (Join-Path $PSScriptRoot  "..") $projectName
+$sourcePath  = Join-Path (Join-Path $PSScriptRoot  "../..") $projectName
 
 Write-Host "Cleaning target if exists $targetPath"
 if (Test-Path($targetPath))
