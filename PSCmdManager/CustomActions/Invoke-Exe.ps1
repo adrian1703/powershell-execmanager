@@ -42,16 +42,16 @@ function Invoke-Exe {
     ,
         [Parameter(Mandatory = $false, HelpMessage = "Enter optional arguments for the executable")]
         [Alias("eargs")]
-        [Array]$execArguments
+        [Array]$execArguments = @()
     )
 
     # Build the full path to the executable
     $exeFullPath = Join-Path -Path $fileLocation -ChildPath $fileName
 
     # Validate that the file exists before attempting to execute it
-    if (-Not (Test-Path $exeFullPath)) {
-        Write-Error "The file '$exeFullPath' does not exist. Please check the file path."
-        return
+    if (-Not (Test-Path $exeFullPath))
+    {
+        throw "The file '$exeFullPath' does not exist. Please check the file path."
     }
 
     # Join arguments into a space-separated string for logging
@@ -61,11 +61,13 @@ function Invoke-Exe {
     Write-Host "Executing command: $exeFullPath $argString"
 
     # Invoke the executable along with arguments
-    try {
+    try
+    {
         & $exeFullPath @execArguments
         Write-Host "Command executed successfully."
     }
-    catch {
-        Write-Error "An error occurred while attempting to execute '$exeFullPath': $_"
+    catch
+    {
+        throw "An error occurred while attempting to execute '$exeFullPath': $_"
     }
 }

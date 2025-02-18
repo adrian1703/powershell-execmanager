@@ -19,4 +19,7 @@ jobs:
           Install-Module powershell-yaml -ErrorAction Stop
       - name: Smoke-Tests with Pester
         shell: pwsh
-        run: Invoke-Pester ./Tests/Smoke
+        run: Invoke-Pester  -Output Detailed ./Tests/Smoke
+      - name: Unit-Tests with Pester
+        shell: pwsh
+        run: Invoke-Pester  -Output Detailed ./Tests/Unit
