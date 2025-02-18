@@ -55,10 +55,18 @@ The configuration file supports placeholder values in the `${VAR_NAME}` format. 
 
 For example:
 ```yaml
-actions:
-  download:
-    defaults:
-      downloadFolder: "${TMP}" # Resolves to the system's temp directory
+schema:
+  version: 1
+  actions:
+    download:
+      definition:
+        function: "Invoke-Download"
+        args:
+          -fileName
+          -link
+          -downloadFolder
+      defaults:
+        downloadFolder: "${TMP}"
 tasks:
   - name: "ExampleTask"
     actions:
@@ -199,20 +207,44 @@ Start-RunAllTasks -configPath "C:\path\to\config.yaml" -dry
 
 ### **1. Download and Install an IDE**
 ```yaml
+schema:
+  version: 1
+  actions:
+    download:
+      definition:
+        function: "Invoke-Download"
+        args:
+          -fileName
+          -link
+          -downloadFolder
+      defaults:
+        downloadFolder: "${TMP}"
+    callExe:
+      definition:
+        function: "Invoke-Exe"
+        args:
+          -fileName
+          -fileLocation
+          -execArguments
+      defaults:
+        fileLocation: "${TMP}"
+
 tasks:
   - name: "Rider"
+    description: "Download and install Rider IDE"
     actions:
       - cmd: download
         args:
           fileName: "install.exe"
-          link: "https://example.com/JetBrains.Rider.exe"
-          downloadFolder: "${TMP}"
+          link: "https://download.jetbrains.com/rider/JetBrains.Rider-2024.3.4.exe"
       - cmd: callExe
         args:
           fileName: "install.exe"
           execArguments:
             - "/S"
-            - "/D=C:/Program Files/Rider"
+            - "/CONFIG=${SETUP_PROJ}/src/rider/silent.config"
+            - "/LOG=${TMP}/rider_install.log"
+            - "/D=${IDES}/jetbrains/Rider"
 ```
 
 **Command**:
