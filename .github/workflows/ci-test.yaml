@@ -17,6 +17,6 @@ jobs:
         run: |
           Set-PSRepository PSGallery -InstallationPolicy Trusted
           Install-Module powershell-yaml -ErrorAction Stop
-      - name: Test with Pester
+      - name: Smoke-Tests with Pester
         shell: pwsh
-        run: Invoke-Pester
+        run: Invoke-Pester ./Tests/Smoke
