@@ -12,6 +12,9 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
+      - name: Unit-Tests with Pester
+        shell: pwsh
+        run: Invoke-Pester  -Output Detailed ./Tests/Unit
       - name: Install Dependency PS yaml
         shell: pwsh
         run: |
@@ -20,6 +23,3 @@ jobs:
       - name: Smoke-Tests with Pester
         shell: pwsh
         run: Invoke-Pester  -Output Detailed ./Tests/Smoke
-      - name: Unit-Tests with Pester
-        shell: pwsh
-        run: Invoke-Pester  -Output Detailed ./Tests/Unit
