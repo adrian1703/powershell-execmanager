@@ -1,4 +1,4 @@
-$testScriptPath = ".\install-onUser.ps1"  # Path to the script being tested
+$testScriptPath = Join-Path $PsScriptRoot "../../Build/install-onUser.ps1"
 
 # Get target path dynamically from the script
 $projectName = & $testScriptPath -getModuleName
