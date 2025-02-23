@@ -1,3 +1,5 @@
+# Does not seem to work on github actions
+
 $testScriptPath = Join-Path $PsScriptRoot "../../Build/install-onUser.ps1"
 
 # Get target path dynamically from the script
