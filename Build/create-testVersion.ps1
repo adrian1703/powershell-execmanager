@@ -37,7 +37,7 @@ Write-Host "Current ModuleVersion: $currentVersion"
 
 $incrementType = Read-Host "Which part of the version would you like to increment? (v - major, m - minor, p - patch)"
 switch ($incrementType) {
-    "M" { $newVersion = [version]"$($currentVersion.Major + 1).0.0" }
+    "v" { $newVersion = [version]"$($currentVersion.Major + 1).0.0" }
     "m" { $newVersion = [version]"$($currentVersion.Major).$($currentVersion.Minor + 1).0" }
     "p" { $newVersion = [version]"$($currentVersion.Major).$($currentVersion.Minor).$($currentVersion.Build + 1)" }
     default {
