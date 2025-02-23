@@ -23,3 +23,6 @@ jobs:
       - name: Smoke-Tests with Pester
         shell: pwsh
         run: Invoke-Pester  -Output Detailed ./Tests/Smoke
+      - name: Smoke-Tests with Pester
+        shell: pwsh
+        run: Invoke-Pester  -Output Detailed ./Tests/Acceptance
