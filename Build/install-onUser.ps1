@@ -34,7 +34,7 @@ if ($getTargetPath) {
 }
 
 if ($getModuleName) {
-    return $moduleName
+    return $projectName
 }
 
 ###################### Removal ######################
