@@ -18,7 +18,7 @@ $moduleSettings = @{
     Author = "Adrian Kuhn"
 #    CompanyName = "Adrian Privat"
     PowerShellVersion = '5.0'
-    ModuleVersion = '0.0.1'
+    ModuleVersion = '0.0.0'
     RootModule = 'PSCmdManager.psm1'
     Description = "A Tool for managing a command workflow using yaml files for configuration. A prime
 example would be the deterministic setup of software on a clean instance."
