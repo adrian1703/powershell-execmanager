@@ -36,12 +36,12 @@ $currentVersion = [version]$Matches['version']
 Write-Host "Current ModuleVersion: $currentVersion"
 
 $incrementType = Read-Host "Which part of the version would you like to increment? (M - major, m - minor, p - patch)"
-switch ($incrementType.ToLower()) {
+switch ($incrementType) {
     "M" { $newVersion = [version]"$($currentVersion.Major + 1).0.0" }
     "m" { $newVersion = [version]"$($currentVersion.Major).$($currentVersion.Minor + 1).0" }
     "p" { $newVersion = [version]"$($currentVersion.Major).$($currentVersion.Minor).$($currentVersion.Build + 1)" }
     default {
-        Write-Error "Invalid option. Please choose 'major', 'minor', or 'patch'."
+        Write-Error "Invalid option. Please choose 'M', 'm', or 'p'."
         exit 1
     }
 }
@@ -74,6 +74,7 @@ Write-Host "Step 3: Committing changes to Git..."
 git add $createManifestScript $generatedManifestPath
 $commitMessage = "Bump module version to $newVersion and regenerate manifest"
 git commit -m $commitMessage
+git push origin
 git tag "v$newVersion-test"
 git push origin --tags
 Write-Host "Changes committed successfully, and version $newVersion-test has been tagged in Git."
