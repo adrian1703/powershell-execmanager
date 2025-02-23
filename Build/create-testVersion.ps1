@@ -28,43 +28,46 @@ if (-Not (Test-Path $createManifestScript)) {
 Write-Host "Step 1: Incrementing the version in create-manifest.ps1..."
 $fileContents = Get-Content -Path $createManifestScript -Raw
 $moduleVersionRegex = "ModuleVersion\s*=\s*'(?<version>\d+\.\d+\.\d+)'"
-if ($fileContents -match $moduleVersionRegex) {
-    $currentVersion = [version]$Matches['version']
-    Write-Host "Current ModuleVersion: $currentVersion"
-
-    $incrementType = Read-Host "Which part of the version would you like to increment? (M - major, m - minor, p - patch)"
-    switch ($incrementType.ToLower()) {
-        "M" { $newVersion = [version]"$($currentVersion.Major + 1).0.0" }
-        "m" { $newVersion = [version]"$($currentVersion.Major).$($currentVersion.Minor + 1).0" }
-        "p" { $newVersion = [version]"$($currentVersion.Major).$($currentVersion.Minor).$($currentVersion.Build + 1)" }
-        default {
-            Write-Error "Invalid option. Please choose 'major', 'minor', or 'patch'."
-            exit 1
-        }
-    }
-    Write-Host "New ModuleVersion: $newVersion"
-
-    $updatedContents = $fileContents -replace $moduleVersionRegex, "ModuleVersion = '$newVersion'"
-    Set-Content -Path $createManifestScript -Value $updatedContents
-    Write-Host "Version updated successfully in create-manifest.ps1."
-} else {
+if (-not ($fileContents -match $moduleVersionRegex)) {
     Write-Error "Failed to locate 'ModuleVersion' in create-manifest.ps1. Aborting..."
     exit 1
 }
+$currentVersion = [version]$Matches['version']
+Write-Host "Current ModuleVersion: $currentVersion"
+
+$incrementType = Read-Host "Which part of the version would you like to increment? (M - major, m - minor, p - patch)"
+switch ($incrementType.ToLower()) {
+    "M" { $newVersion = [version]"$($currentVersion.Major + 1).0.0" }
+    "m" { $newVersion = [version]"$($currentVersion.Major).$($currentVersion.Minor + 1).0" }
+    "p" { $newVersion = [version]"$($currentVersion.Major).$($currentVersion.Minor).$($currentVersion.Build + 1)" }
+    default {
+        Write-Error "Invalid option. Please choose 'major', 'minor', or 'patch'."
+        exit 1
+    }
+}
+Write-Host "New ModuleVersion: $newVersion"
+
+$updatedContents = $fileContents -replace $moduleVersionRegex, "ModuleVersion = '$newVersion'"
+Set-Content -Path $createManifestScript -Value $updatedContents
+Write-Host "Version updated successfully in create-manifest.ps1."
+
 
 # Step 2: Execute `create-manifest.ps1` to generate/update the `.psd1` file
 Write-Host "Step 2: Running create-manifest.ps1 to regenerate the manifest..."
-& $createManifestScript
-
-if ($LASTEXITCODE -ne 0) {
-    Write-Error "Execution of 'create-manifest.ps1' failed. Please check for errors in the script output."
-    exit 1
-} elseif (-Not (Test-Path $generatedManifestPath)) {
-    Write-Error "Manifest file was not generated or updated. Please check 'create-manifest.ps1'."
-    exit 1
-} else {
-    Write-Host "'create-manifest.ps1' executed successfully. Manifest has been regenerated."
+if (Test-Path $generatedManifestPath) {
+    Remove-Item $generatedManifestPath -Force
+    Write-Host "Existing manifest file '$generatedManifestPath' removed."
 }
+& $createManifestScript | Tee-Object -Variable scriptLog
+
+if (-Not (Test-Path $generatedManifestPath))
+{
+    Write-Error "Execution of 'create-manifest.ps1' failed. Please check for errors in the script output."
+    Write-Host "`nScript Log Output:`n$scriptLog"
+    exit 1
+}
+Write-Host "'create-manifest.ps1' executed successfully. Manifest has been regenerated."
+
 
 # Step 3: Commit the updated `create-manifest.ps1` and `.psd1` manifest to Git
 Write-Host "Step 3: Committing changes to Git..."
@@ -73,4 +76,4 @@ $commitMessage = "Bump module version to $newVersion and regenerate manifest"
 git commit -m $commitMessage
 git tag "v$newVersion-test"
 git push origin --tags
-Write-Host "Changes committed successfully, and version $newVersion has been tagged in Git."
+Write-Host "Changes committed successfully, and version $newVersion-test has been tagged in Git."
