@@ -54,7 +54,7 @@ if ($rm) {
         throw "$projectName module still appears in available modules. Please verify manually."
     }
     Write-Host "$projectName module removal verified."
-    return 1
+    exit 0
 }
 
 ###################### Installation ######################
@@ -70,4 +70,4 @@ Copy-Item -Path $sourcePath -Recurse -Destination $targetPath
 Write-Host "Test import module..."
 Import-Module $projectName
 Write-Host "$projectName module successfully installed to $targetPath."
-return
+exit 0
