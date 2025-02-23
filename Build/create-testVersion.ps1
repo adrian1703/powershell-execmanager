@@ -32,11 +32,11 @@ if ($fileContents -match $moduleVersionRegex) {
     $currentVersion = [version]$Matches['version']
     Write-Host "Current ModuleVersion: $currentVersion"
 
-    $incrementType = Read-Host "Which part of the version would you like to increment? (major, minor, patch)"
+    $incrementType = Read-Host "Which part of the version would you like to increment? (M - major, m - minor, p - patch)"
     switch ($incrementType.ToLower()) {
-        "major" { $newVersion = [version]"$($currentVersion.Major + 1).0.0" }
-        "minor" { $newVersion = [version]"$($currentVersion.Major).$($currentVersion.Minor + 1).0" }
-        "patch" { $newVersion = [version]"$($currentVersion.Major).$($currentVersion.Minor).$($currentVersion.Build + 1)" }
+        "M" { $newVersion = [version]"$($currentVersion.Major + 1).0.0" }
+        "m" { $newVersion = [version]"$($currentVersion.Major).$($currentVersion.Minor + 1).0" }
+        "p" { $newVersion = [version]"$($currentVersion.Major).$($currentVersion.Minor).$($currentVersion.Build + 1)" }
         default {
             Write-Error "Invalid option. Please choose 'major', 'minor', or 'patch'."
             exit 1
