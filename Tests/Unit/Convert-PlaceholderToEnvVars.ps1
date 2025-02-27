@@ -36,4 +36,11 @@ Describe "Convert-PlaceholderToEnvVars" {
 
         Convert-PlaceholderToEnvVars -inputString $inputString1 | Should -BeExactly $expected1
     }
+
+    It "Replaces Env-Var if no corresponding Env-Var is found but is passed as arg" {
+        $inputString1 = 'result = ${ENV_NOT_PRESENT}'
+        $expected1 = 'result = hello'
+
+        Convert-PlaceholderToEnvVars -inputString $inputString1 -env "ENV_NOT_PRESENT" -val "hello"| Should -BeExactly $expected1
+    }
 }
