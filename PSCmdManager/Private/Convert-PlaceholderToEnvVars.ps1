@@ -7,7 +7,15 @@ function Convert-PlaceholderToEnvVars {
     $result = [regex]::replace($InputString, '\$\{(.*?)\}', {
         param($match)
         $envVarName = $match.Groups[1].Value
-        return [System.Environment]::GetEnvironmentVariable($envVarName)
+        $envVarValue = [System.Environment]::GetEnvironmentVariable($envVarName)
+        if ($envVarValue)
+        {
+            return $envVarValue
+        }
+        else
+        {
+            return $match.Value
+        }
     })
     return $result
 }

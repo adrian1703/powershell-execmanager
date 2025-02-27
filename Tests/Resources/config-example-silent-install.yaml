@@ -1,0 +1,38 @@
+schema:
+  version: 1
+  environment:
+    NPP: "${USERPROFILE}/npp"
+  actions:
+    download:
+      definition:
+        function: "Invoke-Download"
+        args:
+          -fileName
+          -link
+          -downloadFolder
+      defaults:
+        downloadFolder: "${TMP}"
+    callExe:
+      definition:
+        function: "Invoke-InstallExe"
+        args:
+          -fileName
+          -fileLocation
+          -execArguments
+      defaults:
+        fileLocation: "${TMP}"
+
+tasks:
+  - name: "NotePad++"
+    description: "Silently install NPP"
+    actions:
+      - cmd: download
+        args:
+          fileName: "install.exe"
+          link: "https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.4.6/npp.8.4.6.Installer.x64.exe"
+      - cmd: callExe
+        args:
+          fileName: "install.exe"
+          execArguments:
+              - "/S"
+              - "/D=${NPP}"
