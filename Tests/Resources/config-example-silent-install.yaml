@@ -1,7 +1,5 @@
 schema:
   version: 1
-  environment:
-    NPP: "${USERPROFILE}/npp"
   actions:
     download:
       definition:
@@ -22,17 +20,22 @@ schema:
       defaults:
         fileLocation: "${TMP}"
 
+environment:
+  - env: "USR"
+    val: "${USERPROFILE}"
+  - env: "NPP"
+    val: "${USR}/npp"
+
 tasks:
-  - name: "NotePad++"
-    description: "Silently install NPP"
-    actions:
-      - cmd: download
-        args:
-          fileName: "install.exe"
-          link: "https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.4.6/npp.8.4.6.Installer.x64.exe"
-      - cmd: callExe
-        args:
-          fileName: "install.exe"
-          execArguments:
-              - "/S"
-              - "/D=${NPP}"
+    - name: "NotePad++"
+      actions:
+        - cmd: download
+          args:
+            fileName: "install.exe"
+            link: "https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.4.6/npp.8.4.6.Installer.x64.exe"
+        - cmd: callExe
+          args:
+            fileName: "install.exe"
+            execArguments:
+                - "/S"
+                - "/D=${NPP}"
