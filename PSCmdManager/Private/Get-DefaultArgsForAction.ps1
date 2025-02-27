@@ -5,7 +5,7 @@ function Get-DefaultArgsForAction {
         [Object] $actionSchema
     )
     $deArgs = @()
-    if ($actionSchema -eq $null)
+    if ($null -eq $actionSchema)
     {
         return $deArgs
     }
