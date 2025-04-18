@@ -28,38 +28,37 @@ function getTestFilePath {
 
 Describe "Silent Install Configuration Tests" {
 
-    #    Context "Read-Config Functionality" {
-    #        It "Should throw an error if no parameters are provided" {
-    #            # Arrange
-    #            $nullConfigPath = $null
-    #            $nullConfig = $null
-    #
-    #            # Act & Assert
-    #            { Read-Config -configPath $nullConfigPath -config $nullConfig } | Should -Throw
-    #        }
+
+    It "Should throw an error if no parameters are provided" {
+        # Arrange
+        $nullConfigPath = $null
+        $nullConfig = $null
+
+        # Act & Assert
+        { Read-Config -configPath $nullConfigPath -config $nullConfig } | Should -Throw
+    }
 
     It "Should parse YAML from file path when configPath is provided" {
-        # Arrange
-        $mockConfigPath = getTestFilePath
-        Write-Host "Test File Path $mockConfigPath"
         # Act
-        $parsedConfig = Read-Config -configPath $mockConfigPath -Verbose
+        $parsedConfig = Read-Config -configPath (getTestFilePath)
 
         # Assert
         $parsedConfig | Should -Not -BeNullOrEmpty
         $parsedConfig.schema.version | Should -Be 1
     }
 
-#    It "Should handle environments defined in the YAML correctly" {
-#        # Arrange
-#        $parsedConfig = Read-Config -configPath $testYamlFilePath
-#
-#        # Act
-#        $envConfig = $parsedConfig.environment
-#
-#        # Assert
-#        $envConfig | Should -Not -BeNullOrEmpty
-#        $envConfig | Should -Contain @{ env = "USR"; val = "${USERPROFILE}" }
-#        $envConfig | Should -Contain @{ env = "NPP"; val = "${USR}/npp" }
-#    }
+    It "Should handle environments defined in the YAML correctly and resolve env vars" {
+        # Arrange
+        $parsedConfig = Read-Config -configPath (getTestFilePath)
+
+        # Act
+        $envConfig = $parsedConfig.environment
+        $usr = $envConfig | Where-Object { $_.env -eq "USR" }
+        $npp = $envConfig | Where-Object { $_.env -eq "NPP" }
+
+        # Assert
+        $envConfig | Should -Not -BeNullOrEmpty
+        $usr.val | Should -Be "${env:USERPROFILE}"
+        $npp.val | Should -Be "${env:USERPROFILE}/npp"
+    }
 }
