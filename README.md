@@ -18,10 +18,11 @@ A primary use case is the **fresh and repeatable setup of environments**, such a
 - **Predefined Actions**: Comes with built-in functions:
     - `Invoke-Download`: For downloading files from the internet.
     - `Invoke-Exe`: For executing installer files with arguments.
+- **Generalized Command Invokation**: Omit the definition process of actions and invoke any command your powershell is equipped with. 
 - **Serialized Execution**:
     - Tasks are executed in order.
     - Actions within a task are executed sequentially.
-- **Environment Variables Support**: Incorporate dynamic values (e.g., file paths, user environment variables) using `${}` syntax in the YAML file. These placeholders are automatically resolved to their current environment variable values at runtime.
+- **Environment Variables Support**: Incorporate dynamic values (e.g., file paths, user environment variables) using `${}` syntax in the YAML file. These placeholders are automatically resolved to their current environment variable values at runtime. **Define temporary environment variables** for the specific execution context in the config YAML.
 - **Dry-Run Mode**: Simulate the execution without performing actual actions, useful for testing configurations.
 - **Repeatable Workflows**: Reuse the YAML configuration for consistent and repeatable task executions.
 
@@ -45,6 +46,7 @@ The following functions are used to drive task execution and workflows:
 ### 2. **YAML Configuration**
 The YAML file defines the schema, tasks, actions, and default configurations for all operations. Example sections include:
 - **Actions**: Specify reusable commands like file downloads or application installation.
+- **Environment**: Place for defining environment variables for the execution context
 - **Tasks**: Define high-level steps consisting of one or more actions.
 
 ---
@@ -67,13 +69,16 @@ schema:
           -downloadFolder
       defaults:
         downloadFolder: "${TMP}"
+environment:
+  - env: "FILENAME"
+    val: "file.zip"
 tasks:
   - name: "ExampleTask"
     actions:
       - cmd: download
         args:
           fileName: "example.zip"
-          link: "https://example.com/file.zip"
+          link: "https://example.com/${FILENAME}" # Resolves to "https://example.com/file.zip"
           downloadFolder: "${MY_CUSTOM_FOLDER}" # Resolves to the value of $env:MY_CUSTOM_FOLDER
 ```
 
@@ -205,7 +210,7 @@ Start-RunAllTasks -configPath "C:\path\to\config.yaml" -dry
 
 ## **Examples**
 
-### **1. Download and Install an IDE**
+### **1. Download and Install a JetBrains IDE**
 ```yaml
 schema:
   version: 1
@@ -253,6 +258,12 @@ Start-RunTaskAllActions -configPath "C:\config.yaml" -taskName "Rider"
 ```
 
 ---
+
+## **Tests**
+Example for invoking certain tests
+```powershell
+Invoke-Pester .\Tests\Unit\
+```
 
 ## **Contributing**
 
