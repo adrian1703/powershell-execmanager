@@ -59,19 +59,22 @@ For example:
 ```yaml
 schema:
   version: 1
-  actions:
-    download:
-      definition:
-        function: "Invoke-Download"
-        args:
-          -fileName
-          -link
-          -downloadFolder
-      defaults:
-        downloadFolder: "${TMP}"
+  
+action-definitions:
+  download:
+    definition:
+      function: "Invoke-Download"
+      args:
+        -fileName
+        -link
+        -downloadFolder
+    defaults:
+      downloadFolder: "${TMP}"
+      
 environment:
   - env: "FILENAME"
     val: "file.zip"
+    
 tasks:
   - name: "ExampleTask"
     actions:
@@ -101,25 +104,26 @@ Below is an example of a YAML configuration file (`config-example.yaml`):
 ```yaml
 schema:
   version: 1
-  actions:
-    download:
-      definition:
-        function: "Invoke-Download"
-        args:
-          -fileName
-          -link
-          -downloadFolder
-      defaults:
-        downloadFolder: "${TMP}"
-    callExe:
-      definition:
-        function: "Invoke-Exe"
-        args:
-          -fileName
-          -fileLocation
-          -execArguments
-      defaults:
-        fileLocation: "${TMP}"
+  
+action-definitions:
+  download:
+    definition:
+      function: "Invoke-Download"
+      args:
+        -fileName
+        -link
+        -downloadFolder
+    defaults:
+      downloadFolder: "${TMP}"
+  callExe:
+    definition:
+      function: "Invoke-Exe"
+      args:
+        -fileName
+        -fileLocation
+        -execArguments
+    defaults:
+      fileLocation: "${TMP}"
 
 tasks:
   - name: "Rider"
@@ -214,25 +218,26 @@ Start-RunAllTasks -configPath "C:\path\to\config.yaml" -dry
 ```yaml
 schema:
   version: 1
-  actions:
-    download:
-      definition:
-        function: "Invoke-Download"
-        args:
-          -fileName
-          -link
-          -downloadFolder
-      defaults:
-        downloadFolder: "${TMP}"
-    callExe:
-      definition:
-        function: "Invoke-Exe"
-        args:
-          -fileName
-          -fileLocation
-          -execArguments
-      defaults:
-        fileLocation: "${TMP}"
+  
+action-definitions:
+  download:
+    definition:
+      function: "Invoke-Download"
+      args:
+        -fileName
+        -link
+        -downloadFolder
+    defaults:
+      downloadFolder: "${TMP}"
+  callExe:
+    definition:
+      function: "Invoke-Exe"
+      args:
+        -fileName
+        -fileLocation
+        -execArguments
+    defaults:
+      fileLocation: "${TMP}"
 
 tasks:
   - name: "Rider"

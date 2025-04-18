@@ -73,7 +73,7 @@ function Start-RunTaskAction {
     {
         throw "The provided actionName(=$actionName) is not present in task."
     }
-    $actionSchema = $config.schema.$actionName
+    $actionSchema = $config."action-definitions".$actionName
     if ($actionSchema -eq $null)
     {
         throw "The provided actionName(=$actionName) is not present in schema."
