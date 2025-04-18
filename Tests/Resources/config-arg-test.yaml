@@ -1,0 +1,30 @@
+schema:
+  version: 1
+
+action-definitions:
+  download:
+    definition:
+      function: "Invoke-Download"
+      args:
+        -fileName
+        -link
+        -downloadFolder
+    defaults:
+      downloadFolder: "${TMP}"
+  call:
+    definition:
+      function: "Invoke-Exe"
+      args:
+        -fileName
+        -fileLocation
+        -execArguments
+    defaults:
+      fileLocation: "${TMP}"
+  download-1:
+    definition:
+      function: "Invoke-Exe"
+      args:
+        -fileName
+        -fileLocation
+        -execArguments
+    defaults:

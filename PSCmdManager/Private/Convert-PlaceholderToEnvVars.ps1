@@ -1,20 +1,11 @@
 function Convert-PlaceholderToEnvVars {
     param (
-        [Parameter(Mandatory = $true)]
-        [alias("in")]
-        [string]$inputString
-    ,
-        [Parameter()]
-        [string]$env
-    ,
-        [Parameter()]
-        [string]$val
+        [Parameter(HelpMessage = "Enter the run config as parsed object")]
+        [Alias("cfo")]
+        [Object] $config
     )
-    if(-not [string]::IsNullOrEmpty($env) -and -not [string]::IsNullOrEmpty($val))
-    {
-        [System.Environment]::SetEnvironmentVariable($env, $val, "Process")
-    }
-    $result = [regex]::replace($InputString, '\$\{(.*?)\}', {
+    $result = ConvertTo-Yaml $config
+    $result = [regex]::replace($result, '\$\{(.*?)\}', {
         param($match)
         $envVarName = $match.Groups[1].Value
         $envVarValue = [System.Environment]::GetEnvironmentVariable($envVarName)
@@ -27,5 +18,5 @@ function Convert-PlaceholderToEnvVars {
             return $match.Value
         }
     })
-    return $result
+    return ConvertFrom-Yaml -Yaml $result
 }

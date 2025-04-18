@@ -1,7 +1,7 @@
 schema:
   version: 1
 
-action-definitions:
+definitions:
   download:
     definition:
       function: "Invoke-Download"
