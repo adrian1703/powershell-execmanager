@@ -21,11 +21,5 @@ function Convert-EnvironmentConfigToEnvVars {
         $config = ConvertFrom-Yaml -Yaml $result
     }
 
-    foreach ($envVar in $config.environment)
-    {
-        $name   = $envVar.env
-        $value  = $envVar.val
-        [System.Environment]::SetEnvironmentVariable($name, $value, "Process")
-    }
     return $config
 }
