@@ -20,14 +20,13 @@ BeforeAll {
     . $path
 
     Import-Module powershell-yaml
-}
 
-function getTestFilePath {
-    return Join-Path $PSScriptRoot "/../Resources/config-example-silent-install.yaml"
+    function getTestFilePath {
+        return Join-Path $PSScriptRoot "/../Resources/config-example-silent-install.yaml"
+    }
 }
 
 Describe "Silent Install Configuration Tests" {
-
 
     It "Should throw an error if no parameters are provided" {
         # Arrange

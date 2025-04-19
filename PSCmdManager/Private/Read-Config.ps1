@@ -23,11 +23,6 @@ function Read-Config
         Write-Verbose "Reading YAML content from file: '$configPath'."
         $yamlContent = Get-Content -Raw -Path $configPath
 
-#        Write-Verbose "Replacing system placeholders in the YAML content."
-#        $yamlContent = Convert-PlaceholderToEnvVars -in $yamlContent
-
-#        $yamlContent = $yamlContent -replace "\\", "\\\\"
-
         Write-Verbose "Parsing YAML content into a configuration object.: "
         Write-Verbose "$yamlContent"
         $yamlConfig = ConvertFrom-Yaml -Yaml $yamlContent
