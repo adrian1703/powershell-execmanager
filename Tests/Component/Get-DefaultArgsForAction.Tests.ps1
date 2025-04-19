@@ -79,5 +79,15 @@ Describe "Get-DefaultArgsForAction" {
         $result.Count | Should -Be 0
         Write-Host "Test Case assertion passed. Result is an empty array for empty defaults."
     }
+
+    It "Handles empty defaults in actionDefinition" {
+        $actionDefinition = Get-ActionSchema "download-2"
+
+        # Act
+        $result = Get-DefaultArgsForAction -actionDefinition $actionDefinition
+
+        # Assert
+        $result.Count | Should -Be 0
+    }
 }
 
