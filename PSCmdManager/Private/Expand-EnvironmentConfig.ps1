@@ -1,4 +1,4 @@
-function Convert-EnvironmentConfigToEnvVars {
+function Expand-EnvironmentConfig {
     [CmdletBinding()]
     param (
         [Parameter(HelpMessage = "Enter the run config as parsed object")]

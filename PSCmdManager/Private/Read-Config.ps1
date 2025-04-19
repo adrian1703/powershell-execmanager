@@ -28,7 +28,7 @@ function Read-Config
         $yamlConfig = ConvertFrom-Yaml -Yaml $yamlContent
 
         Write-Verbose "Replacing system placeholders in config."
-        $yamlConfig = Convert-EnvironmentConfigToEnvVars -cfo $yamlConfig
+        $yamlConfig = Expand-EnvironmentConfig -cfo $yamlConfig
 
         Write-Verbose "Replacing environment var placeholders with value in config."
         $yamlConfig = Convert-PlaceholderToEnvVars -cfo $yamlConfig

@@ -11,7 +11,7 @@ BeforeAll {
     Write-Host $path
     . $path
 
-    $path = Join-Path $PSScriptRoot "../../PSCmdManager/Private/Convert-EnvironmentConfigToEnvVars.ps1"
+    $path = Join-Path $PSScriptRoot "../../PSCmdManager/Private/Expand-EnvironmentConfig.ps1"
     Write-Host $path
     . $path
 
