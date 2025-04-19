@@ -30,7 +30,7 @@ BeforeAll {
         Write-Host "Result: $configPath"
         $config = Read-Config -configPath $configPath
         Write-Host "Result: $( $config.GetType().FullName )"
-        return $config.definitions.$actionDefinition
+        return $config."action-definitions".$actionDefinition
     }
 }
 
