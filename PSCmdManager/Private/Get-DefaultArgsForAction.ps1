@@ -1,18 +1,19 @@
 function Get-DefaultArgsForAction {
     param (
-        [Parameter(HelpMessage = "Enter the action-schema object")]
+        [Parameter(HelpMessage = "Enter the action-definition object")]
         [Alias("as")]
-        [Object] $actionSchema
+        [Object] $actionDefinition
     )
-    $deArgs = @()
-    if ($null -eq $actionSchema)
+    if ($null -eq $actionDefinition)
     {
-        return $deArgs
+        return ,@()
     }
-    foreach ($key in $actionSchema.defaults.Keys)
+
+    $result = @()
+    foreach ($key in $actionDefinition.defaults.Keys)
     {
-        $value = $actionSchema.args.$key
-        $deArgs += "/$key=$value"
+        $value = $actionDefinition.defaults.$key
+        $result += "/$key=$value"
     }
-    return $deArgs
+    return $result
 }
