@@ -18,7 +18,7 @@ A primary use case is the **fresh and repeatable setup of environments**, such a
 - **Predefined Actions**: Comes with built-in functions:
     - `Invoke-Download`: For downloading files from the internet.
     - `Invoke-Exe`: For executing installer files with arguments.
-- (soon) **Generalized Command Invokation**: Omit the definition process of actions and invoke any command your powershell is equipped with. 
+- (soon) **Implicit Command Invokation Support**: Omit the definition process of actions and invoke any command your powershell is equipped with. 
 - **Serialized Execution**:
     - Tasks are executed in order.
     - Actions within a task are executed sequentially.
