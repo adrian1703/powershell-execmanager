@@ -28,3 +28,26 @@ action-definitions:
         -fileLocation
         -execArguments
     defaults:
+  download-2:
+    definition:
+      function: "Invoke-Exe"
+      args:
+        -fileName
+        -fileLocation
+        -execArguments
+
+tasks:
+  download-task:
+    actions:
+      download-action:
+        name: download
+        args:
+          fileName: test.exe
+          link: https://example.com/test.exe
+  empty-args-task:
+    actions:
+      empty-args-action:
+        name: download
+        args:
+      no-args-action:
+        name: download

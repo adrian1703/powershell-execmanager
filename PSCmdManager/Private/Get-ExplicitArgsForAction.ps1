@@ -10,5 +10,5 @@ function Get-ExplicitArgsForAction {
         $value = $action.args.$key
         $exArgs += "/$key=$value"
     }
-    return $exArgs
+    return ,$exArgs
 }

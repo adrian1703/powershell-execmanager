@@ -15,5 +15,5 @@ function Get-DefaultArgsForAction {
         $value = $actionDefinition.defaults.$key
         $result += "/$key=$value"
     }
-    return $result
+    return ,$result
 }
