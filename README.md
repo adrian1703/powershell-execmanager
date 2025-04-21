@@ -78,7 +78,8 @@ environment:
 tasks:
   - name: "ExampleTask"
     actions:
-      - cmd: download
+      - name: "Download Example Zip"
+        cmd: download
         args:
           fileName: "example.zip"
           link: "https://example.com/${FILENAME}" # Resolves to "https://example.com/file.zip"
@@ -129,11 +130,13 @@ tasks:
   - name: "Rider"
     description: "Download and install Rider IDE"
     actions:
-      - cmd: download
+      - name: "Download Installer"
+        type: download
         args:
           fileName: "install.exe"
           link: "https://download.jetbrains.com/rider/JetBrains.Rider-2024.3.4.exe"
-      - cmd: callExe
+      - name: "Run Installer Silently"
+        type: callExe
         args:
           fileName: "install.exe"
           execArguments:
@@ -214,48 +217,7 @@ Start-RunAllTasks -configPath "C:\path\to\config.yaml" -dry
 
 ## **Examples**
 
-### **1. Download and Install a JetBrains IDE**
-```yaml
-schema:
-  version: 1
-  
-action-definitions:
-  download:
-    definition:
-      function: "Invoke-Download"
-      args:
-        -fileName
-        -link
-        -downloadFolder
-    defaults:
-      downloadFolder: "${TMP}"
-  callExe:
-    definition:
-      function: "Invoke-Exe"
-      args:
-        -fileName
-        -fileLocation
-        -execArguments
-    defaults:
-      fileLocation: "${TMP}"
-
-tasks:
-  - name: "Rider"
-    description: "Download and install Rider IDE"
-    actions:
-      - cmd: download
-        args:
-          fileName: "install.exe"
-          link: "https://download.jetbrains.com/rider/JetBrains.Rider-2024.3.4.exe"
-      - cmd: callExe
-        args:
-          fileName: "install.exe"
-          execArguments:
-            - "/S"
-            - "/CONFIG=${SETUP_PROJ}/src/rider/silent.config"
-            - "/LOG=${TMP}/rider_install.log"
-            - "/D=${IDES}/jetbrains/Rider"
-```
+TBD 
 
 **Command**:
 ```powershell

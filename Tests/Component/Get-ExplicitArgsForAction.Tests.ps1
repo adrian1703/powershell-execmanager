@@ -21,17 +21,29 @@ BeforeAll {
 
     Import-Module powershell-yaml
 
-    function Get-ActionObject
-    {
+    function Get-ActionObject {
         param (
             [String] $taskName,
             [String] $actionName
         )
-        $configPath = Join-Path $PSScriptRoot "/../Resources/config-arg-test.yaml"
+        # Adjusted path based on the new structure
+        $configPath = Join-Path $PSScriptRoot "../Resources/config-arg-test.yaml"
         Write-Host "Config Path: $configPath"
         $config = Read-Config -configPath $configPath
         Write-Host "Config Type: $( $config.GetType().FullName )"
-        return $config.tasks.$taskName.actions.$actionName
+
+        # Adjusted access pattern for the new schema
+        $task = $config.tasks | Where-Object { $_.name -eq $taskName }
+        if (-not $task) {
+            throw "Task '$taskName' not found in configuration."
+        }
+
+        $action = $task.actions | Where-Object { $_.name -eq $actionName }
+        if (-not $action) {
+            throw "Action '$actionName' not found in task '$taskName'."
+        }
+
+        return $action
     }
 }
 

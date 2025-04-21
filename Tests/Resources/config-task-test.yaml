@@ -1,0 +1,22 @@
+schema:
+  version: 1
+
+action-definitions:
+  cmd:
+    definition:
+      function: "Invoke-Exe"
+      args:
+        -fileName
+        -fileLocation
+        -execArguments
+    defaults:
+      fileName: "cmd.exe"
+      fileLocation: "C:\Windows\System32"
+tasks:
+  - name: "echo-test"
+    actions:
+      - name: "download-action"
+        type: download
+        args:
+          fileName: test.exe
+          link: https://example.com/test.exe

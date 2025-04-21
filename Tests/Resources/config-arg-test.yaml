@@ -37,17 +37,17 @@ action-definitions:
         -execArguments
 
 tasks:
-  download-task:
+  - name: "download-task"
     actions:
-      download-action:
-        name: download
+      - name: "download-action"
+        type: download
         args:
-          fileName: test.exe
-          link: https://example.com/test.exe
-  empty-args-task:
+          - fileName: test.exe
+          - link: https://example.com/test.exe
+  - name: "empty-args-task"
     actions:
-      empty-args-action:
-        name: download
+      - name: "empty-args-action"
+        type: download
         args:
-      no-args-action:
-        name: download
+      - name: "no-args-action"
+        type: download

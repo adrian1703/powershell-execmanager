@@ -77,7 +77,7 @@ function Start-RunTaskAllActions {
     foreach ($action in $actions)
     {
         $actionName = $action.cmd
-        Write-Host "Running action $cnt from $total : `t${action.name}"
+        Write-Host "Running action $cnt from $total : `t${action.type}"
         Start-RunTaskAction -cfo $config -tn $taskName -an $actionName -dry:$dry
     }
 }

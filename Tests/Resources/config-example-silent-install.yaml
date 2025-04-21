@@ -30,11 +30,13 @@ environment:
 tasks:
     - name: "NotePad++"
       actions:
-        - cmd: download
+        - name: "Download"
+          type: "download"
           args:
             fileName: "install.exe"
             link: "https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.4.6/npp.8.4.6.Installer.x64.exe"
-        - cmd: call
+        - name: "Install"
+          type: "call"
           args:
             fileName: "install.exe"
             execArguments:
