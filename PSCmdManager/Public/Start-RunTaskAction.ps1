@@ -82,7 +82,7 @@ function Start-RunTaskAction {
     # Gather arguments
     $exArgs  = Get-ExplicitArgsForAction -ac $action
     $deArgs  = Get-DefaultArgsForAction  -as $actionSchema
-    $cmdArgs = $exArgs + $deArgs
+    $cmdArgs = Merge-DefaultAndExplicitArgs -defaultArgs $deArgs -explicitArgs $exArgs
 
     # Execution
     $cmdName = $actionSchema.definition.function
