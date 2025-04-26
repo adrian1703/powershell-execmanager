@@ -44,6 +44,12 @@ tasks:
         args:
           - fileName: test.exe
           - link: https://example.com/test.exe
+      - name: "override-args-action"
+        type: download
+        args:
+          - fileName: test.exe
+          - link: https://example.com/test.exe
+          - downloadFolder: C:\CustomFolder
   - name: "empty-args-task"
     actions:
       - name: "empty-args-action"
