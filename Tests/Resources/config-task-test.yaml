@@ -2,6 +2,24 @@ schema:
   version: 1
 
 action-definitions:
+  download:
+    definition:
+      function: "Invoke-Download"
+      args:
+        -fileName
+        -link
+        -downloadFolder
+    defaults:
+      downloadFolder: "${TMP}"
+  call:
+    definition:
+      function: "Invoke-Exe"
+      args:
+        -fileName
+        -fileLocation
+        -execArguments
+    defaults:
+      fileLocation: "${TMP}"
   cmd:
     definition:
       function: "Invoke-Exe"
@@ -11,12 +29,26 @@ action-definitions:
         -execArguments
     defaults:
       fileName: "cmd.exe"
-      fileLocation: "C:\Windows\System32"
+      fileLocation: "C:/Windows/System32"
 tasks:
-  - name: "echo-test"
+  - name: "first task"
     actions:
       - name: "download-action"
         type: download
         args:
           fileName: test.exe
           link: https://example.com/test.exe
+      - name: "do exe"
+        type: call
+        args:
+          fileName: test.exe
+          link: https://example.com/test.exe
+  - name: "second task"
+    actions:
+      - name: "echo"
+        type: cmd
+        args:
+          execArguments:
+            - "/c"
+            - "echo"
+            - "arg1"

@@ -63,12 +63,12 @@ function Start-RunTaskAction {
 
     # Validating
     $config = Read-Config $configPath $config
-    $task   = $config.$taskName
+    $task = Find-TaskByName -taskName $taskName -config $config
     if ($task -eq $null)
     {
         throw "The provided taskName(=$taskName) is not present in config."
     }
-    $action = $task.$actionName
+    $action = $task.actions | Where-Object {$_.name -eq $actionName }
     if ($task -eq $null)
     {
         throw "The provided actionName(=$actionName) is not present in task."
@@ -86,13 +86,16 @@ function Start-RunTaskAction {
 
     # Execution
     $cmdName = $actionSchema.definition.function
+    $logString = "$cmdName @($cmdArgs -join ' ')"
     if (-not $dry)
     {
-        Write-Host "Running: $cmdName @($cmdArgs -join ' ')"
-        & $cmdName @cmdArgs
+        Write-Host "Running: $logString"
+        $result = & $cmdName @cmdArgs
+        return $result
     }
     else
     {
-        Write-Host "Dry run: $cmdName @($cmdArgs -join ' ')"
+        Write-Host "Dry run: $logString"
+        return $logString
     }
 }
