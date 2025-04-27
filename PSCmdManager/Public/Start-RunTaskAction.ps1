@@ -68,7 +68,7 @@ function Start-RunTaskAction {
     {
         throw "The provided taskName(=$taskName) is not present in config."
     }
-    $action = $task.actions | Where-Object {$_.name -eq $actionName }
+    $action = Find-ActionByName -actionName $actionName -taskObj $task
     if ($task -eq $null)
     {
         throw "The provided actionName(=$actionName) is not present in task."

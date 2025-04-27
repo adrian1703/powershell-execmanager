@@ -51,4 +51,5 @@ tasks:
           execArguments:
             - "/c"
             - "echo"
-            - "arg1"
+            - "hello"
+            - "world"
