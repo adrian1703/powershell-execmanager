@@ -64,19 +64,22 @@ function Start-RunTaskAction {
     # Validating
     $config = Read-Config $configPath $config
     $task = Find-TaskByName -taskName $taskName -config $config
+    Write-Verbose "Task: $($task | Out-String)"
     if ($task -eq $null)
     {
         throw "The provided taskName(=$taskName) is not present in config."
     }
     $action = Find-ActionByName -actionName $actionName -taskObj $task
-    if ($task -eq $null)
+    Write-Verbose "Action: $($action | Out-String)"
+    if ($action -eq $null)
     {
         throw "The provided actionName(=$actionName) is not present in task."
     }
-    $actionSchema = $config."action-definitions".$actionName
+    $type = $action.type
+    $actionSchema = $config."action-definitions".$type
     if ($actionSchema -eq $null)
     {
-        throw "The provided actionName(=$actionName) is not present in schema."
+        throw "The provided type(=$type) is not present in schema."
     }
 
     # Gather arguments
@@ -86,7 +89,7 @@ function Start-RunTaskAction {
 
     # Execution
     $cmdName = $actionSchema.definition.function
-    $logString = "$cmdName @($cmdArgs -join ' ')"
+    $logString = "$cmdName " + $cmdArgs -join ' '
     if (-not $dry)
     {
         Write-Host "Running: $logString"
