@@ -52,17 +52,18 @@ function Start-RunAllTasks {
         [switch] $dry
     )
 
-    $config = Read-Config $configPath $config
+    $config = Read-Config -configPath $configPath -config $config
     $tasks  = $config.tasks
     $cnt    = 1
     $total  = $tasks.Count
     $results = @()
+    Write-Host "Running all tasks | total: $total"
     foreach ($task in $tasks)
     {
-        $taskName = task.name
-        Write-Host "Running task $cnt from $total : `t$taskName"
+        $taskName = $task.name
+        Write-Host "Running task $taskName | $cnt from $total"
         $results += Start-RunTaskAllActions -cfo $config -tn $taskName -dry:$dry
-        $cnt += 1
+        $cnt++
     }
     return ,$results
 }
