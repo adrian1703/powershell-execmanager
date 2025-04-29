@@ -56,11 +56,13 @@ function Start-RunAllTasks {
     $tasks  = $config.tasks
     $cnt    = 1
     $total  = $tasks.Count
+    $results = @()
     foreach ($task in $tasks)
     {
         $taskName = task.name
         Write-Host "Running task $cnt from $total : `t$taskName"
-        Start-RunTaskAllActions -cfo $config -tn $taskName -dry:$dry
+        $results += Start-RunTaskAllActions -cfo $config -tn $taskName -dry:$dry
         $cnt += 1
     }
+    return ,$results
 }
