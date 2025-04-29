@@ -62,8 +62,8 @@ function Start-RunTaskAction {
     )
 
     # Validating
-    $config = Read-Config $configPath $config
-    $task = Find-TaskByName -taskName $taskName -config $config
+    $config = Read-Config -configPath $configPath -config $config
+    $task   = Find-TaskByName -config $config -taskName $taskName
     Write-Verbose "Task: $($task | Out-String)"
     if ($task -eq $null)
     {

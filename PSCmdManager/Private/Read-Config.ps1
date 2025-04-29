@@ -8,7 +8,7 @@ function Read-Config
     ,
         [Parameter(HelpMessage = "Enter the run config as parsed object")]
         [Alias("cfo")]
-        [string] $config = $null
+        [Object] $config = $null
     )
     if (-not $config -and -not $configPath)
     {
@@ -42,5 +42,6 @@ function Read-Config
     }
 
     Write-Verbose "Returning pre-parsed config object provided by the caller."
+    Write-Verbose "$($config | ConvertTo-Json -Depth 3)"
     return $config
 }

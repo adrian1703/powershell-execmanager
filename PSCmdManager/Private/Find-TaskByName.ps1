@@ -6,5 +6,6 @@ function Find-TaskByName {
         [Parameter(Mandatory = $true, HelpMessage = "Enter config as parsed object")]
         [Object]$config
     )
+
     return $config.tasks | Where-Object { $_.name -eq $taskName }
 }

@@ -57,27 +57,24 @@ function Start-RunTaskAllActions {
         [string]$taskName
     )
 
-    $config = Read-Config $configPath $config
-    $task   = $null
-    foreach ($item in $config.tasks)
-    {
-        if ($taskName -eq $item.name)
-        {
-            $task = $item
-            break
-        }
-    }
+    $config = Read-Config -configPath $configPath -config $config
+    $task   = Find-TaskByName -config $config -taskName $taskName
     if ($task -eq $null)
     {
         throw "The provided taskName(=$taskName) is not present in config."
     }
     $actions = $task.actions
     $cnt     = 1
-    $total   = $actions.Count
+    $total   = $actions.Count    
+    $results = @()
+    Write-Host "Running actions for task $taskName | total: $total"
     foreach ($action in $actions)
     {
-        $actionName = $action.cmd
-        Write-Host "Running action $cnt from $total : `t${action.type}"
-        Start-RunTaskAction -cfo $config -tn $taskName -an $actionName -dry:$dry
+        $actionName = $action.name
+        $actionType = $action.type
+        Write-Host "Running action $actionName | $cnt from $total : $actionType"
+        $results += Start-RunTaskAction -cfo $config -tn $taskName -an $actionName -dry:$dry
+        $cnt++
     }
+    return ,$results
 }
