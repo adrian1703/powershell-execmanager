@@ -18,13 +18,15 @@ A primary use case is the **fresh and repeatable setup of environments**, such a
 - **Predefined Actions**: Comes with built-in functions:
     - `Invoke-Download`: For downloading files from the internet.
     - `Invoke-Exe`: For executing installer files with arguments.
-- (soon) **Implicit Command Invokation Support**: Omit the definition process of actions and invoke any command your powershell is equipped with. 
 - **Serialized Execution**:
     - Tasks are executed in order.
     - Actions within a task are executed sequentially.
 - **Environment Variables Support**: Incorporate dynamic values (e.g., file paths, user environment variables) using `${}` syntax in the YAML file. These placeholders are automatically resolved to their current environment variable values at runtime. **Define temporary environment variables** for the specific execution context in the config YAML.
 - **Dry-Run Mode**: Simulate the execution without performing actual actions, useful for testing configurations.
 - **Repeatable Workflows**: Reuse the YAML configuration for consistent and repeatable task executions.
+- (untested) **Recursive Workflows**: It should be possible to call `Start-RunAllTasks` from within `Start-RunAllTasks`.
+- (soon) **Implicit Command Invokation Support**: Omit the definition process of actions and invoke any command your powershell is equipped with.
+- (soon) **Schema Verification**: Add a command to verify schema validity
 
 ---
 
@@ -97,6 +99,17 @@ $env:MY_CUSTOM_FOLDER = "C:\MyCustomPath"
 ```
 
 ---
+
+## **Schema Contraints and undefined behavior**
+
+For Version 1 the following invariants need to hold true:
+
+- any `tasks._task.actions._action.type` used needs to be defined in `action-definitions`
+- characters that need escaping such as `\` should be avoided. They behave poorly
+- any `tasks._task` need to be uniquely identifiable by `name` (within `tasks`)
+- any `tasks._task.actions._action` need to be uniquely identifiable by `name` (within `actions`)
+- defined `environment` vars must avoid circular references
+
 
 ## **Configuration Example**
 
@@ -207,6 +220,7 @@ Start-RunAllTasks -configPath "C:\path\to\config.yaml" -dry
 ---
 
 ## **Extensibility**
+(Will probably offer better support for this soon)
 
 `PSCmdManager` can be extended by adding custom actions to the schema or implementing functions to handle new types of tasks. Use these steps:
 1. Define the new action type in the **YAML schema**.
@@ -221,7 +235,7 @@ TBD
 
 **Command**:
 ```powershell
-Start-RunTaskAllActions -configPath "C:\config.yaml" -taskName "Rider"
+Start-RunTaskAllActions -configPath "Examples/download-and-install.yaml" -taskName "Rider"
 ```
 
 ---
@@ -231,8 +245,17 @@ Example for invoking certain tests
 ```powershell
 Invoke-Pester .\Tests\Unit\
 ```
+```powershell
+Invoke-Pester .\Tests\Component\
+```
+```powershell
+Invoke-Pester .\Tests\Acceptance\
+```
 
 ## **Contributing**
+
+Philosophie: This is supposed to be a thin layer for repeatable workflows and their representation. Generally, I want
+to avoid feature-bloat, so it remains easy to use. Although I do see the appeal of adding control-structures like if-else. :]
 
 1. Fork the repository.
 2. Create a new branch for your feature or fix.
