@@ -2,13 +2,13 @@
 
 `PSCmdManager` is a PowerShell-based tool designed to manage serialized workflows using a YAML configuration. It provides a modular and repeatable approach to execute tasks and actions, making it ideal for tasks like automating software installations, system setups, or other deterministic workflows.
 
----
-
-## **Overview**
+## **Motivation**
+ 
+I primarily use `GitBash` on my Windows PC. However, when trying to formalize a repeatable setup of my development environment, I ran into the issue of the `silent flag` apparently that rarely works with `GitBash`. So I continued my work using `PowerShell` which eventually lead to the creation of this `Module`.
 
 The module uses YAML files to define tasks and actions, which are executed in a serialized manner. Each task can consist of multiple actions, allowing for configurable and repeatable workflows. It includes predefined functions for downloading files (`Invoke-Download`) and executing installers (`Invoke-Exe`) but can be extended with custom commands.
 
-A primary use case is the **fresh and repeatable setup of environments**, such as installing software on a new machine or configuring a system.
+A primary use case for my development was the **fresh and repeatable setup of environments**, such as installing software on a new machine or configuring a system.
 
 ---
 
