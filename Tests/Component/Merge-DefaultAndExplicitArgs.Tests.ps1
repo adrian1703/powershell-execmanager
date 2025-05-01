@@ -87,9 +87,9 @@ Describe "Merge-DefaultAndExplicitArgs Component Test" {
         # Assert
         $mergedArgs | Should -Not -BeNullOrEmpty
         $mergedArgs.Count | Should -Be 3
-        $mergedArgs | Should -Contain "/fileName=test.exe"
-        $mergedArgs | Should -Contain "/link=https://example.com/test.exe"
-        $mergedArgs | Should -Contain "/downloadFolder=$env:TMP"
+        $mergedArgs["fileName"] | Should -Contain "test.exe"
+        $mergedArgs["link"] | Should -Contain "https://example.com/test.exe"
+        $mergedArgs["downloadFolder"] | Should -Contain "$env:TMP"
     }
     
     It "Should override default args with explicit args when keys match" {
@@ -110,10 +110,10 @@ Describe "Merge-DefaultAndExplicitArgs Component Test" {
         
         # Assert
         $mergedArgs | Should -Not -BeNullOrEmpty
-        $mergedArgs | Should -Contain "/fileName=test.exe"
-        $mergedArgs | Should -Contain "/link=https://example.com/test.exe"
-        $mergedArgs | Should -Contain "/downloadFolder=C:\CustomFolder"
-        $mergedArgs | Should -Not -Contain "/downloadFolder=$env:TMP"
+        $mergedArgs["fileName"] | Should -Contain "test.exe"
+        $mergedArgs["link"] | Should -Contain "https://example.com/test.exe"
+        $mergedArgs["downloadFolder"] | Should -Contain "C:\CustomFolder"
+        $mergedArgs["downloadFolder"] | Should -Not -Contain "$env:TMP"
     }
     
     It "Should handle empty default args" {
@@ -154,6 +154,6 @@ Describe "Merge-DefaultAndExplicitArgs Component Test" {
         
         # Assert
         $mergedArgs.Count | Should -Be 1
-        $mergedArgs | Should -Contain "/downloadFolder=$env:TMP"
+        $mergedArgs["downloadFolder"] | Should -Contain "$env:TMP"
     }
 }

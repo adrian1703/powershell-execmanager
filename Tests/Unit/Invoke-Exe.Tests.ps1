@@ -12,7 +12,7 @@ Describe "Invoke-Exe Tests" {
         It "Should output the arguments passed to echo" {
             # Arrange: Set up the executable and arguments
             $exeName = "cmd.exe"
-            $exeLocation = "C:\Windows\System32"
+            $exeLocation = "C:/Windows/System32"
             $execArguments = @("/c", "echo", "arg1", "arg2", "arg3")
 
             # Act: Capture the output of the command

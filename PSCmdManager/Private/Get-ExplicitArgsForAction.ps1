@@ -4,11 +4,11 @@ function Get-ExplicitArgsForAction {
         [Alias("ac")]
         [Object] $action
     )
-    $exArgs = @()
+    $result = @{}
     foreach ($key in $action.args.Keys)
     {
         $value = $action.args.$key
-        $exArgs += "/$key=$value"
+        $result[$key] = $value
     }
-    return ,$exArgs
+    return ,$result
 }

@@ -80,8 +80,8 @@ Describe "Get-ExplicitArgsForAction" {
 
         # Assert
         $result.Count | Should -Be 2
-        $result | Should -Contain "/fileName=test.exe"
-        $result | Should -Contain "/link=https://example.com/test.exe"
+        $result["fileName"] | Should -Contain "test.exe"
+        $result["link"] | Should -Contain "https://example.com/test.exe"
         Write-Host "Test Case assertion passed. Result contains expected formatted arguments."
     }
 

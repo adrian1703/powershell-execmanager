@@ -63,7 +63,7 @@ Describe "Get-DefaultArgsForAction" {
 
         # Assert
         $result.Count | Should -Be 1
-        $result | Should -Contain "/downloadFolder=$env:TMP"
+        $result["downloadFolder"] | Should -Contain "$env:TMP"
         Write-Host "Test Case assertion passed. Result contains expected formatted arguments."
     }
 

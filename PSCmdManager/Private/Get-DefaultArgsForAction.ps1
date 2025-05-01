@@ -6,14 +6,14 @@ function Get-DefaultArgsForAction {
     )
     if ($null -eq $actionDefinition)
     {
-        return ,@()
+        return ,@{}
     }
 
-    $result = @()
+    $result = @{}
     foreach ($key in $actionDefinition.defaults.Keys)
     {
         $value = $actionDefinition.defaults.$key
-        $result += "/$key=$value"
+        $result[$key] = $value
     }
     return ,$result
 }

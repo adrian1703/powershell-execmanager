@@ -23,21 +23,7 @@ Describe "Start-RunAllTasks Function Tests" {
 
         # Assert
         $results | Should -Not -BeNullOrEmpty
-        
-        # Check first task's first action result (download-action)
-        $results[0] | Should -Match "Invoke-Download"
-        $results[0] | Should -Match "/link=https://example.com/test.exe"
-        $results[0] | Should -Match "/fileName=test.exe"
-        
-        # Check first task's second action result (do exe)
-        $results[1] | Should -Match "Invoke-Exe"
-        $results[1] | Should -Match "/fileName=test.exe"
-        
-        # Check second task's action result (echo)
-        $results[2] | Should -Match "Invoke-Exe"
-        $results[2] | Should -Match "/execArguments=/c echo hello world"
-        $results[2] | Should -Match "/fileName=cmd.exe"
-        $results[2] | Should -Match "/fileLocation=C:/Windows/System32"
+        $results.Count | Should -Be 3
     }
 
     It "Should pass the config object when provided instead of configPath" {

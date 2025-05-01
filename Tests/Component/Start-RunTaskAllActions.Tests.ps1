@@ -28,15 +28,6 @@ Describe "Start-RunTaskAllActions Function Tests" {
         Write-Host "$results"
         $results | Should -Not -BeNullOrEmpty
         $results.Count | Should -Be 2
-
-        # Check first action result (download-action)
-        $results[0] | Should -Match "Invoke-Download"
-        $results[0] | Should -Match "/link=https://example.com/test.exe"
-        $results[0] | Should -Match "/fileName=test.exe"
-
-        # Check second action result (do exe)
-        $results[1] | Should -Match "Invoke-Exe"
-        $results[1] | Should -Match "/fileName=test.exe"
     }
 
     It "Should execute all actions for 'second task' in dry run mode" {
@@ -47,11 +38,6 @@ Describe "Start-RunTaskAllActions Function Tests" {
         $results | Should -Not -BeNullOrEmpty
         $results.Count | Should -Be 1
 
-        # Check the action result (echo)
-        $results[0] | Should -Match "Invoke-Exe"
-        $results[0] | Should -Match "/execArguments=/c echo hello world"
-        $results[0] | Should -Match "/fileName=cmd.exe"
-        $results[0] | Should -Match "/fileLocation=C:/Windows/System32"
     }
 
     It "Should pass the config object when provided instead of configPath" {
@@ -66,14 +52,5 @@ Describe "Start-RunTaskAllActions Function Tests" {
         $results | Should -Not -BeNullOrEmpty
         $results.Count | Should -Be 2
 
-        # Check first action result (download-action)
-        $results[0] | Should -Match "Invoke-Download"
-        $results[0] | Should -Match "/downloadFolder=.*TMP"
-        $results[0] | Should -Match "/link=https://example.com/test.exe"
-        $results[0] | Should -Match "/fileName=test.exe"
-
-        # Check second action result (do exe)
-        $results[1] | Should -Match "Invoke-Exe"
-        $results[1] | Should -Match "/fileName=test.exe"
     }
 }

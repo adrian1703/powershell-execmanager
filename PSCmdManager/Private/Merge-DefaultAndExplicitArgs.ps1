@@ -1,41 +1,35 @@
 function Merge-DefaultAndExplicitArgs {
+    [CmdletBinding()]
     param (
         [Parameter(HelpMessage = "Default arguments array from Get-DefaultArgsForAction")]
         [Alias("def")]
-        [Array] $defaultArgs,
+        [Hashtable] $defaultArgs,
 
         [Parameter(HelpMessage = "Explicit arguments array from Get-ExplicitArgsForAction")]
         [Alias("exp")]
-        [Array] $explicitArgs
+        [Hashtable] $explicitArgs
     )
+    Write-Verbose "Merging default and explicit arguments"
+    Write-Verbose "  Default args count: $($defaultArgs.Keys.Count)"
+    Write-Verbose "  Explicit args count: $($explicitArgs.Keys.Count)"
 
-    # Initialize a hashtable to store the merged arguments
-    $mergedArgsHash = @{}
+    $result = @{}
 
     # Process default arguments first
-    foreach ($arg in $defaultArgs) {
-        if ($arg -match "^/([^=]+)=(.*)$") {
-            $key = $matches[1]
-            $value = $matches[2]
-            $mergedArgsHash[$key] = $value
-        }
+    foreach ($key in $defaultArgs.Keys) {
+        $value = $defaultArgs[$key]
+        Write-Verbose "  Adding default arg: $key = $($value | ConvertTo-Json -Compress)"
+        $result[$key] = $value
     }
 
-    # Process explicit arguments, which take precedence over default arguments
-    foreach ($arg in $explicitArgs) {
-        if ($arg -match "^/([^=]+)=(.*)$") {
-            $key = $matches[1]
-            $value = $matches[2]
-            $mergedArgsHash[$key] = $value
-        }
+    # Process explicit arguments
+    foreach ($key in $explicitArgs.Keys) {
+        $oldValue = if ($result.ContainsKey($key)) { $result[$key] } else { "<none>" }
+        $newValue = $explicitArgs[$key]
+        Write-Verbose "  Overriding arg: $key = $($newValue | ConvertTo-Json -Compress) (was: $oldValue)"
+        $result[$key] = $newValue
     }
 
-    # Convert the hashtable back to an array of strings in the format "/$key=$value"
-    $result = @()
-    foreach ($key in $mergedArgsHash.Keys) {
-        $value = $mergedArgsHash[$key]
-        $result += "/$key=$value"
-    }
 
     return ,$result
 }

@@ -89,7 +89,7 @@ function Start-RunTaskAction {
 
     # Execution
     $cmdName = $actionSchema.definition.function
-    $logString = "$cmdName " + $cmdArgs -join ' '
+    $logString = "$cmdName" + "$($cmdArgs | Out-String)"
     if (-not $dry)
     {
         Write-Host "Running: $logString"

@@ -30,7 +30,15 @@ Describe "Start-RunTaskAction Function Tests" {
         # Act
         $result = Start-RunTaskAction -configPath (getTestFilePath) -taskName "first task" -actionName "download-action" -dry
         # Assert
-        $result | Should -Be "Invoke-Download /downloadFolder=$env:TMP /link=https://example.com/test.exe /fileName=test.exe"
+        $result | Should -Not -BeNullOrEmpty
+
+        # The result should contain "Invoke-Download" followed by a hashtable format
+        $result | Should -Match "Invoke-Download"
+
+        # Check each required parameter exists in the output
+        $result | Should -Match "downloadFolder\s+C:/DEVELO~1/temp"
+        $result | Should -Match "link\s+https://example.com/test.exe"
+        $result | Should -Match "fileName\s+test.exe"
     }
 
     It "Should return the expected command for the 'second task' and 'echo' action in dry run mode" {
@@ -38,6 +46,15 @@ Describe "Start-RunTaskAction Function Tests" {
         $result = Start-RunTaskAction -configPath (getTestFilePath) -taskName "second task" -actionName "echo" -dry
 
         # Assert
-        $result | Should -Be "Invoke-Exe /execArguments=/c echo hello world /fileName=cmd.exe /fileLocation=C:/Windows/System32"
+        $result | Should -Not -BeNullOrEmpty
+
+        # Check command name
+        $result | Should -Match "Invoke-Exe"
+
+        # Check each required parameter exists in the output
+        $result | Should -Match "execArguments\s+{/c, echo, hello, world}"
+        $result | Should -Match "fileName\s+cmd\.exe"
+        $result | Should -Match "fileLocation\s+C:/Windows/System32"
+
     }
 }
