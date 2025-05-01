@@ -12,7 +12,7 @@ schema:
         downloadFolder: "${TMP}"
     callExe:
       definition:
-        function: "Invoke-InstallExe"
+        function: "Invoke-Exe"
         args:
           -fileName
           -fileLocation
@@ -21,14 +21,16 @@ schema:
         fileLocation: "${TMP}"
 
 tasks:
-  - name: "Rider"
-    description: "Download and install Rider IDE"
+  - name: "Install Rider"
+    description: "Download and install Rider IDE" # flavor
     actions:
-      - cmd: download
+      - name: "download"
+        type: download
         args:
           fileName: "install.exe"
           link: "https://download.jetbrains.com/rider/JetBrains.Rider-2024.3.4.exe"
-      - cmd: callExe
+      - name: "install"
+        type: callExe
         args:
           fileName: "install.exe"
           execArguments:

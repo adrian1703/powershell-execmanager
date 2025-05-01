@@ -1,0 +1,25 @@
+schema:
+  version: 1
+
+action-definitions:
+  cmd:
+    definition:
+      function: "Invoke-Exe"
+      args:
+        -fileName
+        -fileLocation
+        -execArguments
+    defaults:
+      fileName: "cmd.exe"
+      fileLocation: "C:/Windows/System32"
+tasks:
+  - name: "Using echo"
+    actions:
+      - name: "echo"
+        type: cmd
+        args:
+          execArguments:
+            - "/c"
+            - "echo"
+            - "hello"
+            - "world"
