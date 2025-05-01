@@ -35,6 +35,6 @@ tasks:
           fileName: "install.exe"
           execArguments:
               - "/S"
-              - "/CONFIG=${SETUP_PROJ}/src/rider/silent.config"
-              - "/LOG=${TMP}/rider_install.log"
-              - "/D=${IDES}/jetbrains/Rider"
+              - "/CONFIG=${SETUP_PROJ}/src/rider/silent.config" # requires the env var to be present
+              - "/LOG=${TMP}/rider_install.log"                 # requires the env var to be present
+              - "/D=${IDES}/jetbrains/Rider"                    # requires the env var to be present
