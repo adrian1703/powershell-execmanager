@@ -12,6 +12,14 @@ A primary use case for my development was the **fresh and repeatable setup of en
 
 ---
 
+## **Installation from Gallery**
+
+```powershell
+Install-Module -Name PSCmdManager
+```
+
+---
+
 ## **Features**
 
 - **YAML Configuration**: Define tasks, actions, and reusable defaults for a flexible setup.
