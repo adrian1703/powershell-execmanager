@@ -260,17 +260,6 @@ Invoke-Pester .\Tests\Component\
 Invoke-Pester .\Tests\Acceptance\
 ```
 
-## **Contributing**
-
-Philosophie: This is supposed to be a thin layer for repeatable workflows and their representation. Generally, I want
-to avoid feature-bloat, so it remains easy to use. Although I do see the appeal of adding control-structures like if-else. :]
-
-1. Fork the repository.
-2. Create a new branch for your feature or fix.
-3. Submit a pull request with a detailed explanation of your changes.
-
----
-
 ## **License**
 
 This project is licensed under the [MIT License](LICENSE).
